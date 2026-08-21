@@ -69,7 +69,7 @@ class GenericAdaptor(AdaptorBase):
         feat = self.feat_mlp(input.features.to(dtype=first_param.dtype), images=input.images, patch_size=input.patch_size).to(dtype=input.features.dtype)
 
         if input.feature_fmt == 'NCHW':
-            feat = (feat.reshape(feat.shape[0], input.images.shape[-2] // input.patch_size * self.feat_mlp.upsample_factor, input.images.shape[-1] // input.patch_size * self.feat_mlp.upsample_factor, feat.shape[2])
+            feat = (feat.reshape(feat.shape[0], input.images.shape[-2] // input.patch_size * self.upsample_factor, input.images.shape[-1] // input.patch_size * self.upsample_factor, feat.shape[2])
                         .permute(0, 3, 1, 2)
             )
 
