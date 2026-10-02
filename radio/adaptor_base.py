@@ -36,11 +36,13 @@ class AdaptorModuleBase(nn.Module):
     def __init__(
         self,
         requires_summary_and_spatial: bool,
-        handles_summary_and_spatial: bool = False
+        handles_summary_and_spatial: bool = False,
+        upsample_factor: int = 1,
     ) -> None:
         super().__init__()
         self.requires_summary_and_spatial = requires_summary_and_spatial
         self.handles_summary_and_spatial = handles_summary_and_spatial
+        self.upsample_factor = upsample_factor
 
         assert not handles_summary_and_spatial or requires_summary_and_spatial, "If handles summary and spatial, must require it too!"
 

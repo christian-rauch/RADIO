@@ -32,7 +32,7 @@ class AttnFDHead(AdaptorModuleBase):
         upsample_rank: int = 0,
         **kwargs  # Ignore kwargs that might be to other "mlp" verions, e.g. teacher_summary_idxs
     ) -> None:
-        super().__init__(requires_summary_and_spatial=False)
+        super().__init__(requires_summary_and_spatial=False, upsample_factor=upsample_factor)
         from timm.models.vision_transformer import Block
         self.blocks = nn.Sequential(*[
             Block(input_size, num_heads=16, init_values=1e-5)
@@ -40,7 +40,7 @@ class AttnFDHead(AdaptorModuleBase):
         ])
         self.mlp = MLP2(input_size, hidden_size, output_size,
                         num_inner=0, pre_norm=pre_norm, device=device,
-                        upsample_factor=upsample_factor, upsample_rank=upsample_rank, **kwargs)
+                        upsample_rank=upsample_rank, **kwargs)
 
     def forward(self, x: torch.Tensor, **kwargs) -> torch.Tensor:
         x = self.blocks(x)

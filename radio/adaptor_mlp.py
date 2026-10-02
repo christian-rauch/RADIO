@@ -53,7 +53,6 @@ class MLP2(AdaptorModuleBase):
     def __init__(self, input_size: int, hidden_size: int, output_size: int,
                  num_inner: int = 0,
                  pre_norm: bool = False, device: torch.device = None,
-                 upsample_factor: int = 1,
                  upsample_rank: int = None,
                  from_config: bool = False,
                  **kwargs):
@@ -64,8 +63,7 @@ class MLP2(AdaptorModuleBase):
             nn.GELU(),
         ) if pre_norm else nn.Identity()
 
-        self.upsample_factor = upsample_factor
-        sq_ups = upsample_factor ** 2
+        sq_ups = self.upsample_factor ** 2
 
         self._real_output_dim = output_size // sq_ups
 
